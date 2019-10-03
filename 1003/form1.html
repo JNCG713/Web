@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        fieldset {
+            border-radius: 5%;
+        }
+    </style>
+</head>
+
+<body>
+    <form id='1'
+    action="http://isbaas.azurewebsites.net/WebForms/Form2Mail.aspx?mailto=jncg713@gmail.com&redirect=http://www.google.com"
+    method="POST">
+    <fieldset>
+        <legend>個人資料 -- 必填 </legend>
+        
+            <div>
+                <label for="">姓名</label>
+                <input type="text" name="name" id="name" value="">
+            </div>
+            <div>
+                <label for="">密碼</label>
+                <input type="text" name="key" id="key" value="">
+            </div>
+            <div>
+                <label for="">性別</label>
+                <input type="radio" name="male" id="male" value="男">男生
+                <input type="radio" name="male" id="female" value="女">女生<br>
+            </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>個人資料 --興趣 </legend>
+            <div>
+                <label for="">興趣:</label><br>
+                <input type="checkbox" name="hobby" id="hobby1" value=>音樂<br>
+                <input type="checkbox" name="hobby" id="hobby2" value=>運動<br>
+                <input type="checkbox" name="hobby" id="hobby3" value=>閱讀<br>
+                <input type="checkbox" name="hobby" id="hobby4" value=>電影<br>
+            </div>
+            <div>
+                <label for="">專長:</label>
+                <textarea name="talent" id="talent" cols="40" rows="5"></textarea>
+            </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>個人資料 --地址 </legend>
+            <div>
+                <label for="">郵遞區號</label>
+                <input type="text" name="number" id="number" value="">
+            </div>
+            <div>
+                <label for="">縣市</label>
+                <select name"city">
+                    <option value="1" selected>台北</option>
+                    <option value="2">台中</option>
+                    <option value="3">高雄</option>
+                </select>
+            </div>
+            <div>
+                <label for="">其他地址</label>
+                <input type="text" name="add2" id="add2" value="">
+            </div>
+        </fieldset>
+        <input type="reset" value="重新填寫">
+        <button type="submit">送件</button>
+    </form>
+</body>
+
+</html>
