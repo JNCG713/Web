@@ -12,30 +12,66 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-    <script>
-        /*function myFunction() {
-            var height = (document.getElementById('height').value) / 100;
-            var weight = document.getElementById('weight').value;
 
-            var BMI = 0;
-            BMI = weight / (height * height);
-            document.getElementById('BMI').innerHTML = BMI;
-        }*/
+<style>
+.br15 {
+            border-radius: 15px;
+        }
+
+.br30 {
+            border-radius: 30px;
+        }
+
+.br50 {
+            border-radius: 50px;
+        }
+</style>
+<script>
+function init (){
 $(document).ready(function () 
 {
 
 $('#Button1').click(function () 
 { 
-  var textHeight=$('#textHeight').val();
+  var textHeight=$('#textHeight').val()/100;
   var textWeight=$('#textWeight').val();
-  textHeight=textHeight/100;
   var BMI=textWeight/(textHeight*textHeight);
-  $('#result').html(BMI);
+  $('#value').val(BMI);
 });
+});
+
+$('#CheckAll').click(function (e) { 
+    var checkornot=$('#CheckAll').prop("checked");
+    $('#CheckBoxGroup input').prop("checked", checkornot);
+        
+    });
+
+$('#sel01').change(function (e) { 
+    var val = $(this).val();
+    $('#ImgGroup2 img').removeClass();
+    $('#ImgGroup2 img').addClass(val);
+});
+
+$('img').hover(
+    function () {
+    $(this).css("cursor", "pointer");
+    
+    $(this).css("transform", "scale(1.1)").css("transition-duration", "0.1s");
+    }, function () {
+        $(this).css("transform", "scale(1)").css("transition-duration", "0.1s");
+    }
+);
+};
+
+$(function(){
+    init();
 });
 
 </script>
 
+<style>
+
+</style>
 <body>
 
     <div class="row" style="margin:10px">
@@ -45,10 +81,72 @@ $('#Button1').click(function ()
             <input class="form-control" id="textHeight" value="0" />
             <label>體重:</label>
             <input class="form-control" id="textWeight" value="0" />
-            <br />
+            <label>結果:</label>
+            <input class="form-control" id="value" value="0" />
             <button class="btn btn-primary" id="Button1">計算</button>
             <br />
-            <span id="result"></span>
+        </div>
+    </div>
+
+    <div class="row1" style="margin:10px">
+        <hr>
+        <div class="col-12">
+            <input id="CheckAll" type="checkbox" />勾選全部
+            <div id="CheckBoxGroup">
+                <input type="checkbox" />項目1
+                <input type="checkbox" />項目2
+                <input type="checkbox" />項目3
+                <input type="checkbox" />項目4
+                <input type="checkbox" />項目5
+                <input type="checkbox" />項目6
+                <input type="checkbox" />項目7
+                <input type="checkbox" />項目8
+            </div>
+        </div>
+    </div>
+
+    <div id="ImgGroup2" class="row" style="margin:10px; padding-top:100px">
+        <hr>
+        <div class="col-12">
+            <select id="sel01">
+                <option value="br15">15px</option>
+                <option value="br30">30px</option>
+                <option value="br50">50px</option>
+            </select>
+        </div>
+
+        <div class="col-4">
+            <img src="1.jpg" style="width:100%" class="img-responsive" />
+        </div>
+        <div class="col-4">
+            <img src="2.jpg" style="width:100%" class="img-responsive" />
+        </div>
+        <div class="col-4">
+            <img src="3.jpg" style="width:100%" class="img-responsive" />
+        </div>
+    </div>
+
+    <div class="row" style="margin:10px">
+        <hr>
+        <div class="col-4">
+            <img src="1.jpg" style="width:100%" class="img-responsive" />
+        </div>
+        <div class="col-4">
+            <img src="2.jpg" style="width:100%" class="img-responsive" />
+        </div>
+        <div class="col-4">
+            <img src="3.jpg" style="width:100%" class="img-responsive" />
+        </div>
+    </div>
+    <div class="row" style="margin:10px">
+        <div class="col-4">
+            <img src="4.jpg" style="width:100%" class="img-responsive" />
+        </div>
+        <div class="col-4">
+            <img src="5.jpg" style="width:100%" class="img-responsive" />
+        </div>
+        <div class="col-4">
+            <img src="6.jpg" style="width:100%" class="img-responsive" />
         </div>
     </div>
 </body>
