@@ -15,23 +15,24 @@
         document.getElementById('value').innerHTML+=value;
     }
     </script>
-    <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
 </head>
 <body>
    <div class="container" style="margin: 20px">
-    <div>
-        <label for="">身高</label>
-        <input id="height"  type="text" placeholder="請輸入身高"/><br>
-        <label for="">體重</label>
-        <input type="text" name="" id="weight" placeholder="請輸入體重"><br>
-        <label for="">結果:</label><span id="value"></span><br>
-        <input type="button" onclick="Buttonclick()" value="計算">
+    <div class="row">
+    <div class="col-md-6">
+        <label for="" class=>身高</label>
+        <input id="height" class="form-control-file" type="text" placeholder="請輸入身高"/><br>
+        <label for="" class=>體重</label>
+        <input type="text" class="form-control-file" id="weight" placeholder="請輸入體重"><br>
+        <label for="" class=>結果:</label><span id="value"></span><br>
+        <input type="button" class="btn btn-primary" onclick="Buttonclick()" value="計算">
     </div> 
-
+</div>
    </div>
    
 </body>
