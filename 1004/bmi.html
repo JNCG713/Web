@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+
+    <script>
+    function Buttonclick (){
+        var height=document.getElementById('height').value;
+        var weight=document.getElementById('weight').value;
+        var value=weight/(height*height)
+        document.getElementById('value').innerHTML+=value;
+    }
+    </script>
+</head>
+<body>
+   <div style="margin: 20px">
+    <div class="col-6">
+        <label for="">身高</label>
+        <input id="height"  type="text" placeholder="請輸入身高"/><br>
+        <label for="">體重</label>
+        <input type="text" name="" id="weight" placeholder="請輸入體重"><br>
+        <label for="">結果:</label><span id="value"></span><br>
+        <input type="button" onclick="Buttonclick()" value="計算">
+    </div> 
+
+   </div>
+   
+</body>
+</html>
