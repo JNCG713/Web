@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        fieldset {
+            border-radius: 10px;
+        }
+    </style>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <form id='1'
+        action="http://isbaas.azurewebsites.net/WebForms/Form2Mail.aspx?mailto=jncg713@gmail.com&redirect=http://www.google.com"
+        method="POST">
+        <div class="container-fluid">
+            <div class="row col-md-12">
+                <div class="col-md-6 ">
+                    <div class="card  " style="margin-top: 10px">
+                        <div class="card-header bg-primary text-white">個人資料 -- 必填 </div>
+                        <div class="card-body">
+                            <label for="" class="label">姓名</label>
+                            <input type="text" name="name" id="name" value="" class="form-control">
+
+                            <label for="" class="label">密碼</label>
+                            <input type="text" name="key" id="key" value="" class="form-control">
+
+                            <label for="" class="label">性別</label><br>
+                            <input type="radio" name="male" id="male" value="男" class="radio">男生
+                            <input type="radio" name="male" id="female" value="女" class="radio">女生
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 ">
+                    <div class="card " style="margin-top: 10px">
+                        <div class="card-header bg-primary text-white">個人資料 --興趣</div>
+                        <div class="card-body">
+                            <div>
+                                <label for="" class="label">興趣:</label><br>
+                                <input type="checkbox" name="hobby" id="hobby1" value="" class="checkbox">音樂
+                                <input type="checkbox" name="hobby" id="hobby2" value="" class=>運動
+                                <input type="checkbox" name="hobby" id="hobby3" value="" class=>閱讀
+                                <input type="checkbox" name="hobby" id="hobby4" value="" class=>電影
+                            </div>
+                            <div>
+                                <label for="" class="label">專長:</label>
+                                <textarea name="talent" id="talent" cols="40" rows="5"
+                                    class="form-control-range"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 ">
+                    <div class="card " style="margin-top: 10px">
+                        <div class="card-header bg-primary text-white">個人資料 --地址</div>
+                        <div class="card-body">
+
+                            <label for="" class="label">郵遞區號</label>
+                            <input type="text" name="number" id="number" value="" class="form-control">
+
+                            <div>
+                                <label for="" class="label">縣市</label>
+                                <select name="city" class="form-control">
+                                    <option value="1" selected>台北</option>
+                                    <option value="2">台中</option>
+                                    <option value="3">高雄</option>
+                                </select>
+                                <label for="" class="label">其他地址</label>
+                                <input type="text" name="add2" id="add2" value="" class="form-control">
+                            </div>
+
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-outline-primary">送件</button>
+                    <button type="reset"  class="btn btn-outline-primary">重新填寫</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+
+</html>
