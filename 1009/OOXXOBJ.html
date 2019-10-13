@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+        td {
+            width: 300px;
+            text-align: center;
+            cursor: pointer;
+            font-size: xx-large;
+        }
+    </style>
+
+<script>
+        class OOXX {
+            constructor() {
+                this.box = [];
+                this.box[0] = ["", "", ""];
+                this.box[1] = ["", "", ""];
+                this.box[2] = ["", "", ""];
+            }
+
+            setBox(x, y, point) {
+                /* todo */
+                //設定落子
+                this.box[x][y] = point;
+            }
+
+            HasWinner(x, y, point) {
+                if (this.box[x][0] == point && this.box[x][1] == point && this.box[x][2] == point) return point;
+                if (this.box[0][y] == point && this.box[1][y] == point && this.box[2][y] == point) return point;
+                if (this.box[0][0] == point && this.box[1][1] == point && this.box[2][2] == point) return point;
+                if (this.box[0][2] == point && this.box[1][1] == point && this.box[2][0] == point) return point;
+                return '';
+                /* 判斷勝利者 */
+            }
+        }
+
+        var flag = "";
+        var game = new OOXX();
+
+        function SetPoint(obj) {
+            //alert(obj);
+            if ($(obj).text() != "_") return;
+            if (flag == "X") {
+                flag = "O";
+                $(obj).text('O');
+            }
+            else {
+                flag = "X";
+                $(obj).text('X');
+            }
+            //show
+            //顯示位置
+            $("#label1").html("rowIndex: " + obj.parentElement.rowIndex + " CellIndex: " + obj.cellIndex + " --> " + $(obj).text());
+            //設定落子
+            game.setBox(obj.parentElement.rowIndex, obj.cellIndex, $(obj).text());
+            //有人贏嗎?
+            var winner = game.HasWinner(obj.parentElement.rowIndex, obj.cellIndex, $(obj).text());
+            if (winner != '') {
+                $("#label1").html(`<span style="color:red">winner : ${winner}</span>`);
+            }
+        }
+
+        $(function () {
+            $("td").click(function () {
+                SetPoint(this);
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div>
+        <table id="table1" border="1" style="width: 300px; height: 300px;">
+            <tbody>
+                <tr>
+                    <td>_</td>
+                    <td>_</td>
+                    <td>_</td>
+                </tr>
+                <tr>
+                    <td>_</td>
+                    <td>_</td>
+                    <td>_</td>
+                </tr>
+                <tr>
+                    <td>_</td>
+                    <td>_</td>
+                    <td>_</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <label id=label1>desc:</label>
+</body>
+
+</html>
