@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>  
+<script>
+ function SingUp() {
+                var isAgree = $('#agree').prop("checked");
+                if (isAgree) {
+                    $('.modal-body').text( '註冊成功');
+                    $('#myModal').modal();
+                    return true;
+                } else {
+                    $('#myModal').modal();
+                    return false;
+                }
+            }
+</script>
+</head>
+  <body>
+        <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">用戶註冊
+                            </div>
+                            <div class="card-body">
+                                <div style="margin-bottom: 20px">
+                                    <div>
+                                        <label for="" style="font-family: 微軟正黑體;">帳號</label><br />
+                                        <input type="text" name="Id" value=""class="form-control" >
+                                    </div>
+                                    <div>
+                                        <label for="" style="font-family: 微軟正黑體;">密碼</label><br />
+                                        <input type="password" name="Password" class="form-control">
+                                    </div>
+                                    <div>
+                                        <label for="" style="font-family: 微軟正黑體;">確認密碼</label><br />
+                                        <input type="password" name="RepeatPassword" class="form-control">
+                                    </div>
+                                    <div>
+                                        <label for="" style="font-family: 微軟正黑體;">email</label><br />
+                                        <input type="text" name="Email" class="form-control">
+                                    </div>
+                                    <div>
+                                        <label for="" style="font-family: 微軟正黑體;">生日</label><br />
+                                        <input type="date" name="Birth" class="form-control">
+                                    </div>
+                                    <div>
+                                        <label for="" style="font-family: 微軟正黑體;">學校/公司</label><br />
+                                        <input type="text" name="CompanyorSchool" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="agree">
+                                    <input type="checkbox" id="agree" name="agree" value="同意" style="font-family: 微軟正黑體; ">請勾選我同意本系統之<a href="login3.html">使用條款</a>
+                                </div>
+                                <div class="signup">
+                                    <input type="submit" class="btn btn-primary form-control" name="signup" value=" 註冊" onclick="SingUp()" style="font-family: 微軟正黑體;margin-top: 5px;">
+                                </div>
+        
+                                <div class="modal" id="myModal">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">提示訊息</h4>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+                                            <div class="modal-body">必勾選我同意本系統之使用條款</div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger form-control" data-dismiss="modal">確定</button>
+                                            </div>
+        
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+  </body>
+</html>
