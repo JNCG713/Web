@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>翻譯機</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <script>
+    function Translate(source, option, printArea) {
+            $.ajax({
+                type: "post",
+                headers: {
+                    "Ocp-Apim-Subscription-Key": "128142deebac4859a990b3d23b6e46b2",
+                    "Content-Type": "application/json"
+                },
+                url: "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=zh-Hant&to=en&to=ja&to=ko&to=es&to=it&to=ar",
+                data: JSON.stringify([{
+                    "Text": source
+                }]),
+                dataType: "json",
+                success: function (response) {
+                    $(printArea).val(response[0].translations[option].text);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            $('#ButtonLtoR').click(function (e) {
+                var source = $('#LeftText').val();
+                var option = $('#RightLanguage').val();
+                Translate(source, option, '#RightText');
+            });
+            $('#ButtonRtoL').click(function (e) {
+                var source = $('#RightText').val();
+                var option = $('#LeftLanguage').val();
+                Translate(source, option, '#LeftText');
+            });
+        });</script>
+</head>
+<body>
+    <div class="container-fluid" style="margin-top: 30px">
+        <div class="row">
+            <div class="col-md-5 flo">
+                <div class="card">
+                    <div class="card-header bg-primary text-center" style="color:white;font-size:large;">
+                        
+                        <select id="LeftLanguage" name="LeftLanguage" class=" custom-select w-25 float-right">
+                            <option value="0">中文</option>
+                            <option value="1">英文</option>
+                            <option value="2">日文</option>
+                            <option value="3">韓文</option>
+                            <option value="4">西班牙文</option>
+                            <option value="5">義大利文</option>
+                            <option value="6">阿拉伯文</option>
+                        </select>
+                    </div>
+                    <div class="card-body">
+                        <textarea name="LeftText" id="LeftText" class="form-control" cols="30" rows="10" placeholder="請輸入需翻譯的文字"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 text-center" style="margin-top:10%;">
+                <button class="btn btn-primary" id="ButtonLtoR">---&gt;</button><br><br>
+                <button class="btn btn-primary" id="ButtonRtoL">
+                    &lt;---
+                </button>
+            </div> <div class="col-md-5">
+                <div class="card">
+                    <div class="card-header bg-primary text-center" style="color:white; font-size:large;">
+                        
+                        <select id="RightLanguage" name="RightLanguage" class=" custom-select w-25  float-right">
+                            <option value="0">中文</option>
+                            <option value="1">英文</option>
+                            <option value="2">日文</option>
+                            <option value="3">韓文</option>
+                            <option value="4">西班牙文</option>
+                            <option value="5">義大利文</option>
+                            <option value="6">阿拉伯文</option>
+                        </select>
+                    </div>
+                    <div class="card-body">
+                        <textarea name="RightText" id="RightText" class="form-control" cols="30" rows="10" placeholder="請輸入需翻譯的文字"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
