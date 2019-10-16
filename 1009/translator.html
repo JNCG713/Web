@@ -11,19 +11,25 @@
             crossorigin="anonymous"></script>
     <script>
     function Translate(source, option, printArea) {
+        // ajax call
             $.ajax({
-                type: "post",
+                type: "post",//get or post 呼叫遠端的方法
+                //要傳的參數
                 headers: {
                     "Ocp-Apim-Subscription-Key": "128142deebac4859a990b3d23b6e46b2",
                     "Content-Type": "application/json"
                 },
                 url: "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=zh-Hant&to=en&to=ja&to=ko&to=es&to=it&to=ar",
+                //要傳的資料型態
                 data: JSON.stringify([{
-                    "Text": source
+                    "Text": source//要翻譯的文字
                 }]),
                 dataType: "json",
+                //success可以放有名稱或是沒有名稱的function(callback 回呼))
                 success: function (response) {
+                    //呼叫遠端服務後的回傳結果
                     $(printArea).val(response[0].translations[option].text);
+                    //可以繼續寫error function
                 }
             });
         }
@@ -59,7 +65,7 @@
                         </select>
                     </div>
                     <div class="card-body">
-                        <textarea name="LeftText" id="LeftText" class="form-control" cols="30" rows="10" placeholder="請輸入需翻譯的文字"></textarea>
+                        <textarea name="LeftText" id="LeftText" class="form-control" cols="30" rows="10" placeholder="輸入文字"></textarea>
                     </div>
                 </div>
             </div>
@@ -83,7 +89,7 @@
                         </select>
                     </div>
                     <div class="card-body">
-                        <textarea name="RightText" id="RightText" class="form-control" cols="30" rows="10" placeholder="請輸入需翻譯的文字"></textarea>
+                        <textarea name="RightText" id="RightText" class="form-control" cols="30" rows="10" placeholder="輸入文字"></textarea>
                     </div>
                 </div>
             </div>

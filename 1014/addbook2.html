@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+    integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <!-- https://datatables.net/ -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        var dat = [
+            ['Eric', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號13樓'],
+        ];
+
+        var DataTable = $('#Table1').DataTable();
+
+        //載入資料
+        function LoadData() {
+            if (localStorage.getItem('AddressBook') != null) {
+                var str = localStorage.getItem('AddressBook');
+                //取回資料，存入dat
+                dat = JSON.parse(str);
+            }
+            //refresh data table
+            refreshData();
+        }
+
+        //儲存資料
+        function SaveData() {
+            var str = JSON.stringify(dat);
+            localStorage.setItem('AddressBook', str);
+        }
+        //更新畫面
+        function refreshData() {
+            DataTable.clear();
+            DataTable.rows.add(dat);
+            DataTable.draw();
+        }
+
+        function ButtonAddNew() {
+            //取得資料
+            var item = [
+                $('#field_Name').val(),
+                $('#field_Birthday').val(),
+                $('#field_TEL').val(),
+                $('#field_Email').val(),
+                $('#field_Address').val()
+            ];
+            //清空UI
+            $('#field_Name').val('');
+            $('#field_Birthday').val('');
+            $('#field_TEL').val('');
+            $('#field_Email').val('');
+            $('#field_Address').val('');
+            //新增一個元素;
+            dat.push(item);
+            //儲存
+            SaveData();
+            //更新
+            refreshData();
+        };
+        //首頁匯出按鈕
+        function Outputformshow() {
+        var str= JSON.stringify(dat);
+        $('#field_DataJSON_output').val(str);
+        $('#field_DataJSON_output').attr('readonly', 'readonly');
+        $('#outputModal').modal();
+        };
+        //首頁匯入按鈕
+        function inputformshow(){
+        $('#field_DataJSON_input').val("");
+        }
+        //首頁匯入按鈕中之匯入按鈕
+        function Inputbuttonck() {
+            dat = JSON.parse($('#field_DataJSON_input').val());
+            refreshData();
+            SaveData();
+        }
+
+        $(document).ready(function () {
+            LoadData();
+            DataTable = $('#Table1').DataTable({ data: dat });
+            $('#Add').click(ButtonAddNew);
+            $('#Outputformshow').click(Outputformshow);
+            $('#Inputformshow').click(Inputformshow);
+            $('#Inputbuttonck').click(Inputbuttonck);
+        })
+
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+            aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">個人通訊錄 <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-primary" id="Addformshow" href="#" data-toggle="modal"
+                        data-target="#addModal">新增</a>
+                </li>
+                <li class="nav-item" style="margin-left: 50px;">
+                    <a class="btn btn-danger" id="Inputformshow" href="#" data-toggle="modal"
+                        data-target="#inputModal">匯入</a>
+                    <a style="margin-left: 10px;" class="btn btn-danger" id="Outputformshow" href="#" data-toggle="modal"
+                    data-target="#outputModal">匯出</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="輸入搜尋文字" aria-label="Search">
+                <button class="btn btn-success my-2 my-sm-0" type="submit">搜尋</button>
+            </form>
+        </div>
+    </nav>
+    <div class="container float-left" style="margin-top: 20px;">
+        <div class="row col-lg-12">
+            <div class="card card-header primary col-10">
+                <table id="Table1" class="display">
+                    <thead>
+                        <tr>
+                            <th>姓名</th>
+                            <th>生日</th>
+                            <th>電話</th>
+                            <th>email</th>
+                            <th>地址</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- 新增按鈕內容 -->
+    <div class="modal" id="addModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">新增</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form>
+                        <label>姓名</label>
+                        <input id="field_Name" type="text" class="form-control" />
+                        <label>生日</label>
+                        <input id="field_Birthday" type="datetime" class="form-control" />
+                        <label>電話</label>
+                        <input id="field_TEL" type="tel" class="form-control" />
+                        <label>email</label>
+                        <input id="field_Email" type="email" class="form-control" />
+                        <label>地址</label>
+                        <input id="field_Address" type="address" class="form-control" />
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="Add">新增</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">關閉</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 匯入按鈕內容 -->
+    <div class="modal fade" id="inputModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">資料匯入</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <textarea id="field_DataJSON_input" class="form-control" cols="60" rows="10"></textarea>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button id="Inputbuttonck" type="button" class="btn btn-primary" data-dismiss="modal">匯入</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">關閉</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 匯出按鈕內容 -->
+    <div class="modal fade" id="outputModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">資料匯出</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <textarea id="field_DataJSON_output" class="form-control" cols="60" rows="10"></textarea>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">關閉</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
