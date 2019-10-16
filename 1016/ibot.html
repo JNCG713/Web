@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>ibot</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+
+        function callIbot(msg, printArea) {
+            // ajax call
+            $.ajax({
+                type: "post",//get or post 呼叫遠端的方法
+                headers: { "Authorization": "EndpointKey 2dbd5259-0c0a-49f9-9fe1-900fd202134b", "Content-Type": "application/json" },
+                url: "https://ibotty.azurewebsites.net/qnamaker/knowledgebases/42484f9a-f9a8-4c05-a9af-80e4d2ff2bbc/generateAnswer",
+                data: JSON.stringify({ "question": msg }),
+                dataType: "json",
+                //success可以放有名稱或是沒有名稱的function(callback 回呼))
+
+                success: function (res) {
+                    //如果成功
+                let html = $('#TalkContainer').html();
+                    console.log(res.answers[0].source);
+                    if (res.answers[0].source != null) {
+                        printArea.html(html + "<br/>" + "客服:" + res.answers[0].answer + "<br/>");
+                    }
+                    else { 
+                        printArea.html(html + "<br/>" + "客服:本系統無此項" + "<br/>");
+                    }
+                },
+                error: function (err) {
+                    //如果有錯
+                    printArea.val("客服:系統連線失敗");
+                }
+            })
+        }
+
+        function ButtonSend() {
+            var content = $('#TalkContainer').html();
+            var input = $('#inputText').val();
+            $('#inputText').val('');//清空
+            $('#TalkContainer').html(content+"<br/>用戶:"+ input);//顯示用戶問題
+            //卷軸
+            $('#TalkContainer').scrollTop($('#TalkContainer')[0].scrollHeight);
+            callIbot(input, $('#TalkContainer'));
+        }
+
+        $(document).ready(function () {
+            $('#ButtonSend').click(ButtonSend);
+            $('#inputText').keypress(function (e) {
+                if (e.keyCode == 13) {
+                    ButtonSend();
+                    return false;
+                }
+            })
+        });
+    </script>
+
+</head>
+
+<body>
+    <div class="row" style="margin: 10px">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <!-- 卡片  -->
+            <div class="card">
+                <!-- 卡片標題 -->
+                <span class="card-header bg-primary" style="color:white">
+                    對談機器人
+                </span>
+                <!-- 卡片內容 -->
+                <div class="card-body">
+                    <!-- 對談區 -->
+                    <div id="TalkContainer" style="overflow: auto; height: 300px;">
+                    </div>
+                </div>
+            </div>
+            <form class="form-inline">
+                <input id="inputText" class="form-control" style="width:88%">
+                <button type="button" id="ButtonSend" class="btn btn-primary">送出</button>
+            </form>
+        </div>
+        <div class="col-2"></div>
+</body>
+
+</html>
