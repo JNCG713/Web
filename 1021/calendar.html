@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <!-- https://cdnjs.com/libraries/jquery-tagsinput -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.js"></script>
+    <style>
+        #row-h {
+            height: 50px
+        }
+
+        #row {
+            height: 120px
+        }
+    </style>
+    <script>
+        var dat ;
+
+        var date = new Date();
+        //載入資料
+        LoadData()
+        {    if (localStorage.getItem('Calendar') != null) {
+                var str = localStorage.getItem('Calendar');
+                //取回資料，存入dat
+                dat = JSON.parse(str);
+            }
+            //refresh data table
+            refreshData();
+        }
+        //更新畫面
+        function refreshData() {
+            $('#Table1').clear();
+            $('#Table1').rows.add(dat);
+            $('#Table1').draw();
+        }
+        //儲存資料
+        function SaveData() {
+            var str = JSON.stringify(dat);
+            localStorage.setItem('Calendar', str);
+        }
+        function ButtonAddNew() {
+            //取得資料
+            var item = [
+                $('#field_id').val(),
+                $('#field_year').val(),
+                $('#field_month').val(),
+                $('#field_date').val(),
+                $('#field_hour').val(),
+                $('#field_thing').val()
+            ];
+            //清空UI
+            $('#field_id').val('');
+            $('#field_year').val('');
+            $('#field_month').val('');
+            $('#field_date').val('');
+            $('#field_hour').val('');
+            $('#field_thing').val('');
+            //新增一個元素;
+            dat.push(item);
+            SaveData();
+            refreshData();
+        };
+        //初始化
+        $(document).ready(function () {
+            LoadData();
+            $('#test1').onclick(ButtonAddNew);
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container" id="Calendar">
+        <div class="row">
+            <table id="Table1" class="table table-bordered table-primary col-12"
+                style="text-align:center;font-size:150%;">
+                <th colspan="7" class=""><label for="" class="btn btn-light" id="test1" data-toggle="modal"
+                    data-target="#addModal">&lt;</label>十月<label for="" class="btn btn-light" id="test1" data-toggle="modal"
+                    data-target="#addModal">&gt;</label></th>
+                <tbody>
+                    <tr id="row-h" class="col-12">
+                        <th>一<label for="" class="btn btn-success" id="test1" data-toggle="modal"
+                            data-target="#addModal">測試新增按鈕</label></th>
+                        <th>二<label for="" class="btn btn-success" id="test1" data-toggle="modal"
+                            data-target="#ModalEdit">測試修改按鈕</label></th>
+                        <th>三</th>
+                        <th>四</th>
+                        <th>五</th>
+                        <th>六</th>
+                        <th>七</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 新增按鈕內容 -->
+    <div class="modal" id="addModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+    
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">新增記事</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+    
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form>
+                                <label>ID</label>
+                                <input id="field_id" type="text" class="form-control" />
+                                <label>年</label>
+                                <input id="field_year" type="text" class="form-control" />
+                                <label>月</label>
+                                <input id="field_month" type="text" class="form-control" />
+                                <label>日</label>
+                                <input id="field_date" type="text" class="form-control" />
+                                <label>時間</label>
+                                <input id="field_time" type="text" class="form-control" />
+                                <label>記事</label>
+                                <input id="field_thing" type="text" class="form-control" />
+                        </form>
+                    </div>
+    
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+    
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="Add">新增</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">關閉</button>
+                    </div>
+    
+                </div>
+            </div>
+        </div>
+
+    <!-- 修改或刪除視窗 -->
+    <div class="modal fade" id="ModalEdit">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">修改記事</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form>
+                        <label>ID</label>
+                        <input id="EditField_id" type="text" class="form-control" />
+                        <label>年</label>
+                        <input id="EditField_year" type="text" class="form-control" />
+                        <label>月</label>
+                        <input id="EditField_month" type="datetime" class="form-control" />
+                        <label>日</label>
+                        <input id="EditField_date" type="tel" class="form-control" />
+                        <label>時間</label>
+                        <input id="EditField_time" type="email" class="form-control" />
+                        <label>記事</label>
+                        <input id="EditField_thing" type="address" class="form-control" />
+                    </form>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button id="ButtonUpdate" type="button" class="btn btn-primary" data-dismiss="modal">儲存</button>
+                    <button id="ButtonDelete" type="button" class="btn btn-danger" data-dismiss="modal">刪除</button>
+                </div>
+</body>
+
+</html>
