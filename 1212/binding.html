@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+        <meta charset="UTF-8">
+    
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+    <script>
+        var json={title:"標題"};
+        function bind(){
+        new Vue(
+             {
+                 el: '#block1',
+                 data: json
+             });     
+        };
+        window.onload = function(){
+            bind();
+        }
+     </script>
+</head>
+<body>
+    <div id="block1">
+    <label>{{title}}</label>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="zh-TW">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+        html,
+        body {
+            height: 100%;
+            font-family: Microsoft JhengHei;
+        }
+
+        #month-area {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            line-height: 80px;
+        }
+
+        #month-area>a {
+            text-align: center;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        #month-area>a:hover {
+            cursor: pointer;
+        }
+
+        #month {
+            font-size: 40px;
+        }
+
+        #calendar {
+            height: 80%;
+            width: 100%;
+        }
+
+        .date {
+            font-size: 1.2em;
+            width: 14.28%;
+            height: 20%;
+        }
+
+        .date>ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .date>div {
+            width: 120px;
+            color: black;
+            height: 18px;
+            font-size: 10px;
+            border-left: 5px solid #61A8DC;
+        }
+
+        .date>div>a {
+            margin-left: 5px;
+        }
+
+        .other {
+            color: gray;
+        }
+
+        .saturday {
+            color: green;
+        }
+
+        .sunday {
+            color: red;
+        }
+
+        .fillet input {
+            border-radius: solid 1px #ccc;
+        }
+
+        .add {
+            position: absolute;
+            border-radius: 20px;
+        }
+
+        .form-control {
+            display: inline;
+            max-width: 50%;
+        }
+
+        .calendar-content>tr {
+            background-color: gray;
+        }
+
+        .thing:hover {
+            cursor: pointer;
+            background-color: #ccc;
+        }
+
+        .date:hover {
+            background-color: cornsilk;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <button type="button" class="btn btn-primary add" data-toggle="modal" data-target="#addThingsModal">
+        +
+    </button>
+
+    <!-- Add Things Modal -->
+    <div class="modal fade" id="addThingsModal" tabindex="-1" role="dialog" aria-labelledby="addThingsModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addThingsModalLabel">新增事項</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body fillet">
+                    <div class="form-group" style="display:inline;">
+                        <span>時間:</span>
+                        <input class="" id="s_year" style="width:60px;" type="number" />
+                        年
+                        <select class="" id="s_month">
+                        </select>
+                        月
+                        <select class="" id="s_date">
+                        </select>
+                        日
+                        <select class="" id="s_hour">
+                        </select>
+                        時
+                    </div>
+
+                    <div class="form-group">
+
+                        <span>事項:</span>
+                        <input type="text" class="form-control" name="" id="things" aria-describedby="helpId"
+                            placeholder="">
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                    <button type="button" class="btn btn-primary" id="addition">增加</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Things Modal -->
+    <div class="modal fade" id="EditThingsModal" tabindex="-1" role="dialog" aria-labelledby="EditThingsModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="EditThingsModalLabel">待辦事項</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body fillet">
+                    <div class="form-group" style="display:inline;">
+                        <span>時間:</span>
+                        <label id="e_time"></label>
+                    </div>
+
+                    <div class="form-group">
+                        <span>事項:</span>
+                        <input type="text" id="e_things">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="e_save">儲存</button>
+                    <button type="button" class="btn btn-danger" id="e_delete">刪除</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="month-area">
+        <a id="last-month">＜</a>
+        <a id="month"></a>
+        <a id="next-month">＞</a>
+    </div>
+
+
+    <table id="calendar" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    <p class="text-center">日</p>
+                </th>
+                <th>
+                    <p class="text-center">一</p>
+                </th>
+                <th>
+                    <p class="text-center">二</p>
+                </th>
+                <th>
+                    <p class="text-center">三</p>
+                </th>
+                <th>
+                    <p class="text-center">四</p>
+                </th>
+                <th>
+                    <p class="text-center">五</p>
+                </th>
+                <th>
+                    <p class="text-center">六</p>
+                </th>
+            </tr>
+        </thead>
+        <tbody id="calendar-content">
+        </tbody>
+    </table>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+
+    <script>
+        var Calendar = []; //用於顯示當月日期 , 順便填滿剩餘空格
+        var ToDoList = []; //紀錄所有的事項
+        var currentEditId = ''; //紀錄正在編輯哪一則Schedule
+        var d;
+        var _year;
+        var _month;
+        var _date;
+        var _week;
+
+        $(function () {
+            d = new Date();
+            _year = d.getFullYear();
+            _month = d.getMonth();
+            _date = d.getDate();
+            _week = d.getDay();
+
+            //從LocalStorage取ToDoList
+            GetToDoListFromLocalStorage();
+
+            DisplayCalendar(); //顯示月曆
+            DisplayToDoList(); //顯示事項
+            SelectDateDefault(); // <-不重要      設定新增事項時的預設時間
+
+            //顯示下個月 : 月份+1 , 重畫月曆
+            $('#next-month').on('click', function () {
+                console.log('give next-month click');
+                if (_month < 11) {
+                    _month += 1;
+                } else {
+                    _month = 0;
+                    _year += 1;
+                }
+                //重新繪製月曆和事項
+                DisplayCalendar();
+                DisplayToDoList();
+                SelectDateDefault();
+            });
+
+            //顯示上個月 : 月份-1 , 重劃月曆
+            $('#last-month').on('click', function () {
+                console.log('give last-month click');
+                if (_month > 1) {
+                    _month -= 1;
+                } else {
+                    _month = 11;
+                    _year -= 1;
+                }
+                //重新繪製月曆和事項
+                DisplayCalendar();
+                DisplayToDoList();
+                SelectDateDefault();
+            });
+
+            //按下Modal上的新增事項
+            $('#addition').on('click', function () {
+                var year = $('#s_year').val();
+                var month = $('#s_month').val();
+                var date = $('#s_date').val();
+                var hour = $('#s_hour').val();
+                var things = $('#things').val();
+                var id = CreateGuid();
+
+                //透過參數 建立Schedule 
+                CreateSchedule(id, year, month, date, hour, things);
+                console.log('ToDoList is update :', ToDoList);
+                //增加的事項如果是當月就要直接顯示在畫面上
+                if (month == _month) {
+                    $('.date' + date).append($('<div>')
+                        .append($('<a>')
+                            .text(hour + ':00 ' + things)
+                        )
+                        .attr('id', id)
+                        .addClass('thing')
+                    );
+                }
+                //新增的事項需要給予 編輯的功能
+                EditThingsClickEvent();
+                //新增後 更新LocalStorage
+                SetToDoListFromLocalStorage(ToDoList);
+                $('#things').val('');
+                $('#addThingsModal').modal('hide');
+            });
+
+            //按下編輯的儲存
+            $('#e_save').on('click', function () {
+                //取得新的編輯文字
+                var new_things = $('#e_things').val();
+                for (var i = 0; i < ToDoList.length; i++) {
+                    //從ToDoList裡面找到編輯的目標 , currentEditId是全域 = 正在編輯的Schedule ID
+                    if (ToDoList[i].id == currentEditId) {
+                        ToDoList[i].things = new_things;
+                        //同時畫面也要更新編輯過的事項
+                        $('#' + currentEditId).children()[0].text = new_things;
+                        console.log('update new things');
+                    }
+                }
+                //編輯完咯 , 隱藏Modal
+                $('#EditThingsModal').modal('hide');
+                //資料有更動就存一次LocalStorage
+                SetToDoListFromLocalStorage(ToDoList);
+            });
+
+            //編輯事項裡面的刪除事項
+            $('#e_delete').on('click', function () {
+                for (var i = 0; i < ToDoList.length; i++) {
+                    //透過ID找到正在編輯的Schedule
+                    if (ToDoList[i].id == currentEditId) {
+                        if (confirm('您確定要刪除該行程?')) {
+                            //為何用splice 而不用delete ? delete後 目標會變成undefined , splice會刪的很乾淨 避免發生錯誤
+                            //delete ToDoList[i];
+                            ToDoList.splice(i, 1);
+                            $('#' + currentEditId).remove();
+                            //return false; //才能break; 否則會執行完整個迴圈
+                        }
+                        $('#EditThingsModal').modal('hide');
+                    }
+                }
+                SetToDoListFromLocalStorage(ToDoList);
+            });
+
+        });
+
+
+        //顯示月曆 , 依照全域變數
+        function DisplayCalendar() {
+
+            //先將顯示畫面的清空 , 呈現資料的陣列清空
+            $('#calendar-content').empty();
+            Calendar = [];
+            //顯示月份
+            $('#month').text(GetMonthName(_month));
+
+            //這邊很重要,有些同學只把_month+-1 ,但忘了更新這三個參數,所以產生的月曆都不正確
+            var firstDay = new Date(_year, _month, 1);
+            var lastDay = new Date(_year, _month + 1, 0);
+            var lastDateOfLastMonth = new Date(_year, _month, 0);
+
+            //取得上個月日期(上月要顯示幾天 , 上個月最後一天)
+            GetLastMonthDate(firstDay.getDay() - 1, lastDateOfLastMonth); //想一下firstDay.getDay()為甚麼要減一
+
+            //顯示本月幾天　傳入(第一天，最後一天)
+            GetCurrentMonthDate(firstDay, lastDay);
+
+            //顯示下個月日期
+            GetNextMonthDate(lastDay);
+            console.log('Calendar is ', Calendar);
+            var rows_count = Calendar.length / 7;
+            //產生tr
+            for (var i = 0; i < rows_count; i++) {
+                $('#calendar-content').append($('<tr>').addClass('week' + i));
+            }
+
+            //產生td 在tr裡面
+            for (var i = 0; i < Calendar.length; i++) {
+                var week = parseInt(i / 7);
+                var target = $('#calendar-content').find('.week' + week);
+                if (Calendar[i].month != _month) { //非本月 灰色
+                    target.append($('<td>').text(Calendar[i].date).addClass('date').addClass('other'));
+                } else if (Calendar[i].week % 7 == 6) { //周六 給周六class 綠色
+                    target.append($('<td>').text(Calendar[i].date).addClass('date').addClass('date' + Calendar[i].date)
+                        .addClass(
+                            'saturday'));
+                } else if (Calendar[i].week % 7 == 0) { //周日 給周日class 紅色
+                    target.append($('<td>').text(Calendar[i].date).addClass('date').addClass('date' + Calendar[i].date)
+                        .addClass(
+                            'sunday'));
+                } else { //其他黑色
+                    target.append($('<td>').text(Calendar[i].date).addClass('date').addClass('date' + Calendar[i]
+                        .date));
+                }
+
+            }
+
+        }
+
+        //取得上個月日期
+        function GetLastMonthDate(lastMonthDateRange, lastDateOfLastMonth) {
+            var displaydate = lastDateOfLastMonth.getDate() - lastMonthDateRange;
+            var displayWeek = lastDateOfLastMonth.getDay() - lastMonthDateRange;
+            //依照順序顯示上個月日期
+            for (var i = 0; i <= lastMonthDateRange; i++) {
+
+                var singleItem = {
+                    "month": lastDateOfLastMonth.getMonth(),
+                    "date": displaydate,
+                    "week": displayWeek
+                }
+                displaydate++;
+                displayWeek++;
+                Calendar.push(singleItem);
+            }
+        }
+
+        //取得本月日期
+        function GetCurrentMonthDate(firstDay, lastDay) {
+            var start = firstDay.getDate();
+            var end = lastDay.getDate();
+            for (var i = start; i <= end; i++) {
+                var today_week = new Date(_year, _month, i);
+                var singleItem = {
+                    "month": today_week.getMonth(),
+                    "date": i,
+                    "week": today_week.getDay()
+                }
+                Calendar.push(singleItem);
+            }
+        }
+
+        //取得下個月日期
+        function GetNextMonthDate(lastDayOfThisMonth) {
+            var lastDateOfthisMonth_week = lastDayOfThisMonth.getDay();
+            var nextMonthFirstDate = new Date(_year, _month + 1, 1); //取得下個月第一天
+            for (var i = 0; i < 6 - lastDateOfthisMonth_week; i++) {
+                var singleItem = {
+                    "month": nextMonthFirstDate.getMonth(),
+                    "date": nextMonthFirstDate.getDate() + i,
+                    "week": nextMonthFirstDate.getDay() + i
+                }
+
+                Calendar.push(singleItem);
+            }
+        }
+
+        //傳入參數,建立事項
+        function CreateSchedule(id, year, month, date, hour, things) {
+            var schedule = {
+                'id': id,
+                'year': year, //Unique ID
+                'month': month,
+                'date': date,
+                'hour': hour,
+                'things': things
+            }
+            console.log('schedule is :', schedule);
+            ToDoList.push(schedule);
+        }
+
+        //編輯代辦事項的點按事件 
+        function EditThingsClickEvent() {
+            //每個 class = thing 的元素 按的時候都會跳出Modal 編輯事項
+            $('.thing').on('click', function () {
+                console.log('EditThingsClickEvent click ID:', this.id);
+                event.preventDefault(); //讀取時呼叫一次 , 增加行程呼叫一次 , 避免重複呼叫產生的問題
+                //把現在正編輯的ID存到全域 方便使用
+                currentEditId = this.id;
+                //傳入現在正編輯的元素ID , 從ToDoList裡面找到要編輯的 schedule 
+                //用this去抓 (p.s.這邊的this是前五行.thing click的元素,也就是說 誰被按 誰就是this;因為this被包在on事件裡面,所以這邊的this不會是整個html)
+                var schedule = GetToDoListItemById(this.id);
+                var str_time = schedule.hour + '時';
+                //先把資料準備好再顯示Modal -> modal('show')
+                $('#e_time').text(str_time);
+                $('#e_things').val(schedule.things);
+                $('#EditThingsModal').modal('show');
+            });
+        }
+
+        //透過事項id 找到ToDoList裡面的某一事項
+        function GetToDoListItemById(id) {
+            console.log('GetToDoItemById id is ', id)
+            for (var i = 0; i < ToDoList.length; i++) {
+                if (ToDoList[i].id == id) {
+                    return ToDoList[i];
+                }
+            }
+        }
+
+        //呈現本月的事項
+        function DisplayToDoList() {
+            $.each(ToDoList, function (i) {
+                console.log('DisplayToDoList , ToDoList is', ToDoList)
+                //若是本月的事項
+                if (ToDoList[i].month == _month) {
+                    console.log('data is', this);
+                    $('.date' + ToDoList[i].date).append($('<div>')
+                        .append($('<a>')
+                            .text(ToDoList[i].hour + ':00 ' +
+                                ToDoList[i].things)
+                        )
+                        .attr('id', ToDoList[i].id)
+                        .addClass('thing')
+                    );
+                }
+            });
+            //給予每個事項Click事件
+            EditThingsClickEvent();
+        }
+
+        //--------------------------底下不是很重要  看看就好---------------------------
+
+        //新增代辦事項時，DropdownList預設值的設定(日)
+        function SelectDateDefault() {
+            $('#s_year').val(_year);
+            CreateMonthSelectItem('s_month', 12);
+            $('#s_month').val(_month);
+            var last_day_of_the_month = new Date(_year, _month + 1, 0).getDate();
+            CreateDateSelectItem('s_date', last_day_of_the_month);
+            $('#s_date').val(_date);
+            SelectHourDefault();
+        }
+
+        //新增代辦事項時，DropdownList預設值的設定(月)
+        function CreateMonthSelectItem(id, max) {
+            $('#' + id).html('');
+            for (var i = 0; i < max; i++) {
+                var o = new Option(i + 1, i);
+                $(o).html(i + 1);
+                $('#' + id).append(o);
+            }
+        }
+
+        //新增代辦事項時，DropdownList預設值的設定(日)
+        function CreateDateSelectItem(id, max) {
+            $('#' + id).html('');
+            for (var i = 1; i <= max; i++) {
+                var o = new Option(i, i);
+                $(o).html(i);
+                $('#' + id).append(o);
+            }
+        }
+
+        //新增代辦事項時，DropdownList預設值的設定(時)
+        function SelectHourDefault() {
+            $('#s_hour').html('');
+            for (var i = 0; i <= 24; i++) {
+                var o = new Option(i, i);
+                $(o).html(i);
+                $('#s_hour').append(o);
+            }
+        }
+
+
+
+        //從 local storage 讀取 TodoList
+        function GetToDoListFromLocalStorage() {
+            ToDoList = localStorage.getItem('ToDoList');
+            if (ToDoList == undefined) {
+                ToDoList = [];
+            } else {
+                ToDoList = jQuery.parseJSON(ToDoList);
+            }
+        }
+
+        //將TodoLost存到local storage
+        function SetToDoListFromLocalStorage(parameter) {
+            parameter = JSON.stringify(parameter);
+            localStorage.setItem('ToDoList', parameter);
+        }
+
+
+        //取得月份名稱
+        function GetMonthName(_month) {
+            var MonthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+                'October', 'Novenber', 'December'
+            ];
+            return MonthArray[_month];
+        }
+
+        //產生一組新的GUID 並回傳
+        function CreateGuid() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                var r = Math.random() * 16 | 0,
+                    v = c == 'x' ? r : r & 0x3 | 0x8;
+                return v.toString(16);
+            });
+        }
+    </script>
+
+</body>
+
+</html>

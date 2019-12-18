@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+        <meta charset="UTF-8">
+    
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+        <!-- bootstrap 4.3.1 -->
+        <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+
+var json =
+    {
+        items: [
+            {
+                ID: 3,
+                title: "總裁", name: "Eric", PictureURL: "https://i.imgur.com/uxvy97n.png", Phone: "0912345678",
+                Address: "新竹市大同區二三五路四號六樓",
+                Memo: "澳洲來的人", isValid: true
+            },
+            {
+                ID: 4,
+                title: "瑪農", name: "David", PictureURL: "https://i.imgur.com/qsQcoGh.png", Phone: "0987654321",
+                Address: "台北市信義區忠孝東路231號3樓",
+                Memo: "充滿活力的廉價勞工", isValid: true
+            },
+            {
+                ID: 5,
+                title: "Boss", name: "Amy", PictureURL: "https://i.imgur.com/dfww1JX.png", Phone: "0912121121",
+                Address: "高雄市仁義區六六路3號23樓",
+                Memo: "小資女", isValid: true
+            }
+        ]
+    };
+
+      
+
+        function bind(){
+        new Vue(
+             {
+                 el: '#block1',
+                 data: json
+             });     
+        };
+
+        function ConvertToJson(){
+            alert(JSON.stringify(json));
+        }
+
+        window.onload = function(){
+            bind();
+            document.getElementById("SaveButton").onclick = ConvertToJson;
+        }
+        
+     </script>
+</head>
+<body>
+    <div id="block1">
+    <div>
+    <img v-bind:src="PictureURL"><br/>
+    <label>資料編號:{{item.ID}}</label><br/>
+    <label>職稱</label><br/>
+    <input type="text" v-model="item.title"/><br/>
+    <label>姓名</label><br/>
+    <input type="text" v-model="item.name"/><br/>
+    <label>電話</label><br/>
+    <input type="text" v-model="item.Phone"/><br/>
+    <label>地址</label><br/>
+    <input type="text" v-model="item.Address"/><br/>
+    <label>Memo</label><br/>
+    <input type="text" v-model="item.Memo"/><br/>
+    <br/>
+    <input type="button" id="SaveButton"/><br/>
+    </div>
+    </div>
+</body>
+
+</html>
